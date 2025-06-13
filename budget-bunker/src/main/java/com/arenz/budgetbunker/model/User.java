@@ -30,7 +30,7 @@ public class User {
     @Column(name = "username", nullable = false, length = 50, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 50, unique = true)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
