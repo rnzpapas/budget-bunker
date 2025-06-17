@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arenz.budgetbunker.model.User;
 import com.arenz.budgetbunker.service.UserService;
+import com.arenz.budgetbunker.util.PasswordUtil;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,7 +25,14 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    
+    @PostMapping
+    public ResponseEntity<User> loginUser (@RequestBody String username, @RequestBody String password) {
+        boolean isValidUser = userService.findUserByUsername(username)
+        .map(user -> user::isValidUser)
+        .orElse(ResponseEntity.notFound().build());
+    }
+    
     @PostMapping
     public ResponseEntity<User> createOrUpdateUser(@RequestBody User user) {
         User savedUser = userService.saveUser(user);
